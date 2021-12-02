@@ -7,6 +7,6 @@ import tasksDelete from "../controllers/tasks/tasks.delete.js"
 const router = Router()
 router.get("/task", taskGet)
 router.post("/task", taskPost)
-router.patch("/task", tasksPatch)
+router.patch("/task/:id", tasksPatch)
 router.delete("/task/:id", tasksDelete)
 export default router
