@@ -8,5 +8,5 @@ const router = Router()
 router.get("/task", taskGet)
 router.post("/task", taskPost)
 router.patch("/task", tasksPatch)
-router.delete("/task", tasksDelete)
+router.delete("/task/:id", tasksDelete)
 export default router
