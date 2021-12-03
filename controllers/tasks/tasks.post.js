@@ -1,5 +1,6 @@
 import db from "../../db.json"
 import fs from "fs"
+import { randomUUID } from "crypto"
 
 export default (req, res) => {
   try {
@@ -9,10 +10,12 @@ export default (req, res) => {
     const task = { name: req.body.name }
 
     task.done = false
-    task.uuid = Math.floor(Math.random() * 10000)
+    task.uuid = randomUUID()
     task.date = new Date()
     db.push(task)
     fs.writeFileSync("db.json", JSON.stringify(db))
     res.send(task)
-  } catch (err) {}
+  } catch (err) {
+    res.send(err.message)
+  }
 }
