@@ -12,7 +12,7 @@ export default (req, res) => {
     task.done = false
     task.uuid = randomUUID()
     task.date = new Date()
-    db.push(task)
+    db.tasks.push(task)
     fs.writeFileSync("db.json", JSON.stringify(db))
     res.send(task)
   } catch (err) {
