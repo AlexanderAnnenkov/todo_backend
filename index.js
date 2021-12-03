@@ -1,8 +1,9 @@
 import express, { json, urlencoded } from "express"
 import router from "./routes/router.js"
+import dotenv from "dotenv"
 
-
-const PORT = 3000
+dotenv.config()
+const PORT = process.env.PORT || 3000
 const app = express()
 app.use(json())
 app.use(urlencoded({extended:true}))
