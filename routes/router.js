@@ -5,7 +5,7 @@ import tasksPatch from "../controllers/tasks/tasks.patch.js"
 import tasksDelete from "../controllers/tasks/tasks.delete.js"
 
 const router = Router()
-router.get("/task", taskGet)
+router.get("/tasks", taskGet)
 router.post("/task", taskPost)
 router.patch("/task/:id", tasksPatch)
 router.delete("/task/:id", tasksDelete)
