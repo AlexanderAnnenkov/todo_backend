@@ -16,7 +16,7 @@ const Task = sequelize.define("task", {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
-      len: [2, 100]
+      len: [2, 100],
     },
     unique: true,
   },

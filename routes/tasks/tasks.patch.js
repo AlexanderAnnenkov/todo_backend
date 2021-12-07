@@ -1,6 +1,8 @@
 const Task = require("../../models/index")
+const express = require("express")
+const router = express.Router()
 
-module.exports = async (req, res) => {
+module.exports = router.patch("/task/:uuid", async (req, res) => {
   try {
     const name = req.body.name
     const done = req.body.done
@@ -9,11 +11,11 @@ module.exports = async (req, res) => {
       await item.update({ name })
     }
     if (typeof done === "boolean") {
-      typeof done ==="boolean" && await item.update({ done })
+      typeof done === "boolean" && (await item.update({ done }))
     }
     res.send({ item })
   } catch (err) {
     const message = err
     res.status(400).json({ message })
   }
-}
+})
