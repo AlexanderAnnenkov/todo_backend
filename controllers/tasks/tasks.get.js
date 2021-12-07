@@ -1,29 +1,36 @@
-import db from "../../db.json"
+const Task = require('../../models/index')
 
-export default (req, res) => {
-  if (req.query.filterBy === "done") {
-    res.send(db.tasks.filter((e) => e.done === true))
+module.exports = async (req, res) => {
+ try{ let filterTask
+  if (req.query.filterBy === 'done'){
+    filterTask = await (Task.findAll({
+      where:{
+        done:true        
+      },
+      order:[['createdAt' , req.query.sortBy]]
+    }))
   }
-  if (req.query.filterBy === "undone") {
-    res.send(db.tasks.filter((e) => e.done === false))
+  if (req.query.filterBy === 'undone'){
+    filterTask = await (Task.findAll({
+      where:{
+        done: false
+      },
+      order:[['createdAt' , req.query.sortBy]]
+    }))
   }
-  if (req.query.filterBy !== "done" || req.query.filterBy !== "undone") {
-    res.send(db.tasks)
+  if (req.query.filterBy !== 'done' && req.query.filterBy !== 'undone'){
+    filterTask = await (Task.findAll({
+      order:[['createdAt' , req.query.sortBy]]
+    }))
   }
-  if (req.query.orderBy === "new") {
-    res.send(
-      db.tasks.sort((a, b) => {
-        if (a.date > b.date) return 1
-        else return -1
-      })
-    )
+  res.send(filterTask, 200)
+  
+}catch(err){
+  if(err.errors.length){
+    
+    res.status(400).json(err.errors[0].message)
   }
-  if (req.query.orderBy === "old") {
-    res.send(
-      db.tasks.sort((a, b) => {
-        if (a.date > b.date) return -1
-        else return 1
-      })
-    )
-  }
+  else
+  res.status(400).json(err)
+}
 }

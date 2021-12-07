@@ -1,12 +1,15 @@
-import { Router } from "express"
-import taskGet from "../controllers/tasks/tasks.get.js"
-import taskPost from "../controllers/tasks/tasks.post.js"
-import tasksPatch from "../controllers/tasks/tasks.patch.js"
-import tasksDelete from "../controllers/tasks/tasks.delete.js"
+const express = require('express')
+const router = express.Router()
+const taskGet = require("../controllers/tasks/tasks.get.js")
+const taskPost = require("../controllers/tasks/tasks.post.js")
+const taskPatch = require("../controllers/tasks/tasks.patch.js")
+const taskDelete = require("../controllers/tasks/tasks.delete.js")
 
-const router = Router()
+
+
+
 router.get("/tasks", taskGet)
 router.post("/task", taskPost)
-router.patch("/task/:id", tasksPatch)
-router.delete("/task/:id", tasksDelete)
-export default router
+router.patch("/task/:uuid", taskPatch)
+router.delete("/task/:uuid", taskDelete)
+module.exports = router

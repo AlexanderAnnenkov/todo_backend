@@ -1,9 +1,11 @@
-import db from '../../db.json'
-import fs from 'fs'
-
-export default (req, res) => {
-  const deleteItem = db.tasks.filter(e => e.uuid != req.params.id)
-  db.tasks = deleteItem
-  fs.writeFileSync("db.json", JSON.stringify(db))
-  res.send({ data: "Success Delete" })
+const Task = require("../../models/index") 
+module.exports  = async(req, res) => {
+  try{
+    const id = await Task.findByPk(req.params.uuid)
+    await id.destroy()
+  res.send({ data: "Success Delete" })}
+  catch(err){
+    const message = err
+    res.status(400).json({ message })
+  }
 }
