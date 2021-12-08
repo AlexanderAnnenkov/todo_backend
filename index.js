@@ -1,17 +1,14 @@
-import express, { json, urlencoded } from "express"
-import router from "./routes/router.js"
-import dotenv from "dotenv"
-import cors from "cors"
+const express = require("express")
+const recursive = require("recursive-readdir-sync")
+const cors = require("cors")
 
-dotenv.config()
-const PORT =  3001
+
 const app = express()
+
 app.use(cors())
-app.use(json())
-app.use(urlencoded({extended:true}))
-app.use("/", router)
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
+recursive(`${__dirname}/routes`).forEach((file) => app.use("/", require(file)))
 
-
-
-app.listen(PORT, () => {})
+app.listen(process.env.PORT, () => {})
