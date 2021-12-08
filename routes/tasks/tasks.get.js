@@ -1,4 +1,4 @@
-const Task = require("../../models/index")
+const models = require("../../models/").task
 const express = require("express")
 const router = express.Router()
 
@@ -6,7 +6,7 @@ module.exports = router.get("/tasks", async (req, res) => {
   try {
     let filterTask
     if (req.query.filterBy === "done") {
-      filterTask = await Task.findAll({
+      filterTask = await models.findAll({
         where: {
           done: true,
         },
@@ -14,7 +14,7 @@ module.exports = router.get("/tasks", async (req, res) => {
       })
     }
     if (req.query.filterBy === "undone") {
-      filterTask = await Task.findAll({
+      filterTask = await models.findAll({
         where: {
           done: false,
         },
@@ -22,7 +22,7 @@ module.exports = router.get("/tasks", async (req, res) => {
       })
     }
     if (req.query.filterBy !== "done" && req.query.filterBy !== "undone") {
-      filterTask = await Task.findAll({
+      filterTask = await models.findAll({
         order: [["createdAt", req.query.sortBy]],
       })
     }

@@ -1,4 +1,4 @@
-const Task = require("../../models/index")
+const models = require("../../models/").task
 const express = require("express")
 const router = express.Router()
 
@@ -6,7 +6,7 @@ module.exports = router.patch("/task/:uuid", async (req, res) => {
   try {
     const name = req.body.name
     const done = req.body.done
-    const item = await Task.findByPk(req.params.uuid)
+    const item = await models.findByPk(req.params.uuid)
     if (name) {
       await item.update({ name })
     }

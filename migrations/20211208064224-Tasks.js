@@ -1,8 +1,8 @@
-"use strict"
+'use strict';
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("tasks", {
+     return queryInterface.createTable("tasks", {
       uuid: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -31,6 +31,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("tasks")
-  },
-}
+     await queryInterface.dropTable("tasks")
+  }
+};
