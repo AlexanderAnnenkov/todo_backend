@@ -1,4 +1,4 @@
-const models = require("../../models/").task
+const models = require("../../models/").Task
 const express = require("express")
 const router = express.Router()
 
