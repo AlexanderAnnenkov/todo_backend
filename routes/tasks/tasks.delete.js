@@ -1,11 +1,11 @@
-const models = require("../../models/").task
+const models = require("../../models/").User
 const express = require("express")
 const router = express.Router()
 
 module.exports = router.delete("/task/:uuid", async (req, res) => {
   try {
-    const id = await models.findByPk(req.params.uuid)
-    await id.destroy()
+    const user = await models.findByPk(req.user.id)
+    await user.removeTask(req.params.uuid)
     res.send({ data: "Success Delete" })
   } catch (err) {
     const message = err
