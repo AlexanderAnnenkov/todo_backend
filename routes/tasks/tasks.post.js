@@ -12,8 +12,8 @@ module.exports = router.post("/task", async (req, res) => {
     res.send(task)
   } catch (err) {
     console.log(err)
-    // if (err.errors.length) {
-    //   res.status(400).json({ message: err.errors[0].message })
-    // }
+    if (err.errors.length) {
+      res.status(400).json({ message: err.errors[0].message })
+    }
   }
 })
