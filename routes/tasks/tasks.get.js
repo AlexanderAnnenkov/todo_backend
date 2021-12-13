@@ -8,7 +8,7 @@ module.exports = router.get("/tasks", async (req, res, next) => {
     if (req.query.filterBy === "done") {
       filterTask = await models.findAll({
         where: {
-          userId:req.user.id,
+          userId: req.user.id,
           done: true,
         },
         order: [["createdAt", req.query.sortBy]],
@@ -17,7 +17,7 @@ module.exports = router.get("/tasks", async (req, res, next) => {
     if (req.query.filterBy === "undone") {
       filterTask = await models.findAll({
         where: {
-          userId:req.user.id,
+          userId: req.user.id,
           done: false,
         },
         order: [["createdAt", req.query.sortBy]],
@@ -25,14 +25,12 @@ module.exports = router.get("/tasks", async (req, res, next) => {
     }
     if (req.query.filterBy !== "done" && req.query.filterBy !== "undone") {
       filterTask = await models.findAll({
-        where:{
-          userId:req.user.id
+        where: {
+          userId: req.user.id,
         },
         order: [["createdAt", req.query.sortBy]],
       })
-      console.log(filterTask, 123);
     }
-    console.log(filterTask);
     res.send(filterTask, 200)
   } catch (err) {
     next(err)

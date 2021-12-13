@@ -8,7 +8,6 @@ dotenv.config()
 
 module.exports = router.post("/registration", async (req, res, next) => {
   try {
-    console.log(req.body)
     const login = req.body.login
     const password = req.body.password
 
@@ -16,7 +15,7 @@ module.exports = router.post("/registration", async (req, res, next) => {
       where: { login },
     })
 
-    if (checkLogin) throw new Error ('Login must be unique')
+    if (checkLogin) throw new Error("Login must be unique")
 
     const hashPass = bcrypt.hashSync(password, 10)
 
@@ -24,7 +23,7 @@ module.exports = router.post("/registration", async (req, res, next) => {
     const payload = { id: user.uuid, login: user.login }
 
     const jwtToken = jwt.sign(payload, process.env.SECRET_KEY)
-    res.send({jwtToken}, 200)
+    res.send({ jwtToken }, 200)
   } catch (err) {
     next(err)
   }

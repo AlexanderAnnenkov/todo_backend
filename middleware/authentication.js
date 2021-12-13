@@ -9,8 +9,8 @@ const verifyToken = (req, res, next) => {
     if (!token) {
       throw new Error("A token is required for authentication")
     }
-      const decoded = jwt.verify(token, config.SECRET_KEY)
-      req.user = decoded
+    const decoded = jwt.verify(token, config.SECRET_KEY)
+    req.user = decoded
     next()
   } catch (err) {
     next(err)

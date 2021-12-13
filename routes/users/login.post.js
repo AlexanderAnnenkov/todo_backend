@@ -18,12 +18,12 @@ module.exports = router.post("/login", async (req, res, next) => {
     if (!user) throw new Error("Invalid login")
 
     const hashPass = await bcrypt.compare(password, user.password)
-    if (!hashPass) throw new Error ("Invalid password")
+    if (!hashPass) throw new Error("Invalid password")
 
     const payload = { id: user.uuid, login: user.login }
 
     const jwtToken = jwt.sign(payload, process.env.SECRET_KEY)
-    res.send({jwtToken}, 200)
+    res.send({ jwtToken }, 200)
   } catch (err) {
     next(err)
   }
