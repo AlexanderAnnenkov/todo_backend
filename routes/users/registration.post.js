@@ -24,7 +24,7 @@ module.exports = router.post("/registration", async (req, res, next) => {
     const payload = { id: user.uuid, login: user.login }
 
     const jwtToken = jwt.sign(payload, process.env.SECRET_KEY)
-    res.send(jwtToken)
+    res.send({jwtToken}, 200)
   } catch (err) {
     next(err)
   }

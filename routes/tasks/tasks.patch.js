@@ -2,7 +2,7 @@ const models = require("../../models/").Task
 const express = require("express")
 const router = express.Router()
 
-module.exports = router.patch("/task/:uuid", async (req, res) => {
+module.exports = router.patch("/task/:uuid", async (req, res, next) => {
   try {
     const name = req.body.name
     const done = req.body.done
@@ -15,7 +15,6 @@ module.exports = router.patch("/task/:uuid", async (req, res) => {
     }
     res.send({ item })
   } catch (err) {
-    const message = err
-    res.status(400).json({ message })
+    next(err)
   }
 })

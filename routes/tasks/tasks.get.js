@@ -2,7 +2,7 @@ const models = require("../../models/").Task
 const express = require("express")
 const router = express.Router()
 
-module.exports = router.get("/tasks", async (req, res) => {
+module.exports = router.get("/tasks", async (req, res, next) => {
   try {
     let filterTask
     if (req.query.filterBy === "done") {
@@ -35,9 +35,6 @@ module.exports = router.get("/tasks", async (req, res) => {
     console.log(filterTask);
     res.send(filterTask, 200)
   } catch (err) {
-    // console.log(err);
-    // if (err.errors.length) {
-    //   res.status(400).json(err.errors[0].message)
-    // } else res.status(400).json(err)
+    next(err)
   }
 })
