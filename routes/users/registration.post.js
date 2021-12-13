@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
 dotenv.config()
 
-module.exports = router.post("/registration", async (req, res) => {
+module.exports = router.post("/registration", async (req, res, next) => {
   try {
     console.log(req.body)
     const login = req.body.login
@@ -16,7 +16,7 @@ module.exports = router.post("/registration", async (req, res) => {
       where: { login },
     })
 
-    if (checkLogin) return res.send("Name must be unique")
+    if (checkLogin) throw new Error ('Login must be unique')
 
     const hashPass = bcrypt.hashSync(password, 10)
 
@@ -26,8 +26,6 @@ module.exports = router.post("/registration", async (req, res) => {
     const jwtToken = jwt.sign(payload, process.env.SECRET_KEY)
     res.send(jwtToken)
   } catch (err) {
-    if (err.errors.length) {
-      res.status(400).json({ message: err.errors[0].message })
-    }
+    next(err)
   }
 })

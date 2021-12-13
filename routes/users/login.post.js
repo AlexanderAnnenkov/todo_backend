@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
 dotenv.config()
 
-module.exports = router.post("/login", async (req, res) => {
+module.exports = router.post("/login", async (req, res, next) => {
   try {
     const login = req.body.login
     const password = req.body.password
@@ -15,18 +15,16 @@ module.exports = router.post("/login", async (req, res) => {
       where: { login },
     })
 
-    if (!user) throw "Invalid login"
+    if (!user) throw new Error("Invalid login")
 
     const hashPass = await bcrypt.compare(password, user.password)
-    if (!hashPass) throw "Invalid password"
+    if (!hashPass) throw new Error ("Invalid password")
 
     const payload = { id: user.uuid, login: user.login }
 
     const jwtToken = jwt.sign(payload, process.env.SECRET_KEY)
-    res.send(jwtToken)
+    res.send({jwtToken}, 200)
   } catch (err) {
-    if (err.errors.length) {
-      res.status(400).json({ message: err.errors[0].message })
-    }
+    next(err)
   }
 })

@@ -2,22 +2,19 @@ const jwt = require("jsonwebtoken")
 const config = process.env
 
 const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization
-  // console.log(token);
-  if (req.url === "/registration" || req.url ==="/login") return next()
-
-  if (!token) {
-    return res.status(403).send("A token is required for authentication")
-  }
   try {
-    const decoded = jwt.verify(token, config.SECRET_KEY)
-    // console.log(decoded, '123123123123123');
-    req.user = decoded
+    const token = req.headers.authorization
+    if (req.url === "/registration" || req.url === "/login") return next()
+
+    if (!token) {
+      throw new Error("A token is required for authentication")
+    }
+      const decoded = jwt.verify(token, config.SECRET_KEY)
+      req.user = decoded
+    next()
   } catch (err) {
-    // console.log(err , "123123123123123123");
-    return res.status(401).send("Invalid Token")
+    next(err)
   }
-  return next()
 }
 
 module.exports = verifyToken
