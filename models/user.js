@@ -1,14 +1,12 @@
-"use strict"
-
 module.exports = (sequelize, DataTypes) => {
-  const Task = sequelize.define("Task", {
+  const User = sequelize.define("User", {
     uuid: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
     },
-    name: {
+    login: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -16,9 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       unique: true,
     },
-    done: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
+    password: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     createdAt: {
@@ -32,13 +29,8 @@ module.exports = (sequelize, DataTypes) => {
       field: "updated_at",
     },
   })
-  Task.associate = (models) => {
-    Task.belongsTo(models.User, {
-      foreignKey: {
-        type: DataTypes.UUID,
-        field: "userId",
-      },
-    })
+  User.associate = (models) => {
+    User.hasMany(models.Task)
   }
-  return Task
+  return User
 }
