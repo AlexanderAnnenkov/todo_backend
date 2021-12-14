@@ -11,7 +11,7 @@ module.exports = router.get("/tasks", async (req, res, next) => {
           userId: req.user.id,
           done: true,
         },
-        order: [["createdAt", req.query.sortBy]],
+        order: [["createdAt", req.query.sortBy || 'asc']],
       })
     }
     if (req.query.filterBy === "undone") {
@@ -20,7 +20,7 @@ module.exports = router.get("/tasks", async (req, res, next) => {
           userId: req.user.id,
           done: false,
         },
-        order: [["createdAt", req.query.sortBy]],
+        order: [["createdAt", req.query.sortBy || 'asc']],
       })
     }
     if (req.query.filterBy !== "done" && req.query.filterBy !== "undone") {
@@ -28,7 +28,7 @@ module.exports = router.get("/tasks", async (req, res, next) => {
         where: {
           userId: req.user.id,
         },
-        order: [["createdAt", req.query.sortBy]],
+        order: [["createdAt", req.query.sortBy || 'asc']],
       })
     }
     res.send(filterTask, 200)
