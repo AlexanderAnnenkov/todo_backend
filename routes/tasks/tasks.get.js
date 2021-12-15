@@ -5,32 +5,41 @@ const router = express.Router()
 module.exports = router.get("/tasks", async (req, res, next) => {
   try {
     let filterTask
-    if (req.query.filterBy === "done") {
-      filterTask = await models.findAll({
-        where: {
-          userId: req.user.id,
-          done: true,
-        },
-        order: [["createdAt", req.query.sortBy || 'asc']],
-      })
+    switch (req.query.filterBy) {
+      case "done":
+        {
+          filterTask = await models.findAll({
+            where: {
+              userId: req.user.id,
+              done: true,
+            },
+            order: [["createdAt", req.query.sortBy || "asc"]],
+          })
+        }
+        break
+      case "undone":
+        {
+          filterTask = await models.findAll({
+            where: {
+              userId: req.user.id,
+              done: false,
+            },
+            order: [["createdAt", req.query.sortBy || "asc"]],
+          })
+        }
+        break
+      default:
+        {
+          filterTask = await models.findAll({
+            where: {
+              userId: req.user.id,
+            },
+            order: [["createdAt", req.query.sortBy || "asc"]],
+          })
+        }
+        break
     }
-    if (req.query.filterBy === "undone") {
-      filterTask = await models.findAll({
-        where: {
-          userId: req.user.id,
-          done: false,
-        },
-        order: [["createdAt", req.query.sortBy || 'asc']],
-      })
-    }
-    if (req.query.filterBy !== "done" && req.query.filterBy !== "undone") {
-      filterTask = await models.findAll({
-        where: {
-          userId: req.user.id,
-        },
-        order: [["createdAt", req.query.sortBy || 'asc']],
-      })
-    }
+
     res.send(filterTask, 200)
   } catch (err) {
     next(err)
