@@ -31,6 +31,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: "updated_at",
     },
+    index: {
+      type: DataTypes.INTEGER,
+    },
   })
   Task.associate = (models) => {
     Task.belongsTo(models.User, {
