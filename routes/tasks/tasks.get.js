@@ -13,7 +13,7 @@ module.exports = router.get("/tasks", async (req, res, next) => {
               userId: req.user.id,
               done: true,
             },
-            order: [["createdAt", req.query.sortBy || "asc"]],
+            order: [["index", req.query.sortBy || "asc"]],
           })
         }
         break
@@ -24,7 +24,7 @@ module.exports = router.get("/tasks", async (req, res, next) => {
               userId: req.user.id,
               done: false,
             },
-            order: [["createdAt", req.query.sortBy || "asc"]],
+            order: [["index", req.query.sortBy || "asc"]],
           })
         }
         break
@@ -34,7 +34,7 @@ module.exports = router.get("/tasks", async (req, res, next) => {
             where: {
               userId: req.user.id,
             },
-            order: [["createdAt", req.query.sortBy || "asc"]],
+            order: [["index", req.query.sortBy || "asc"]],
           })
         }
         break
